@@ -17,4 +17,8 @@ def lines(board)
   LINE_INDEXES.map{ |line| line.map{ |index| board[index] } }
 end
 
+def lines_containing(search_values = [], board)
+  lines(board).select{|line_values| search_values - line_values == []}
+end
+
 end

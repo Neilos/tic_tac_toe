@@ -8,7 +8,7 @@ end
 
 class TestLineAware < MiniTest::Test
 
-def test_lines_returns_all_rows_columns_and_diagonals
+def test_can_return_all_rows_columns_and_diagonals
   board_string = "123456789"
   line_aware_instance = LineAwareClass.new
   line_values = [
@@ -24,6 +24,13 @@ def test_lines_returns_all_rows_columns_and_diagonals
   assert_equal line_values, line_aware_instance.lines(board_string)
 end
 
+def test_can_return_lines_with_an_array_of_values
+  line_aware_instance = LineAwareClass.new
+  board_string = " 23446789"
+  expected = [[" ","4","9"],[" ","4","7"]]
+  result = line_aware_instance.lines_containing([" ","4"], board_string)
+  assert_equal expected, result
+end
 
 
 end
