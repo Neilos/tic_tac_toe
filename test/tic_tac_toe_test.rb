@@ -20,70 +20,100 @@ class TicTacToeTest < Minitest::Test
   # The first move is always a cross, so if, for example, a board is initialised with two crosses
   # and two noughts, you know the next move is a cross.
 
+  def setup
+    @player1 = Player.new
+    @player2 = Player.new
+  end
+
   def test_a_board_with_fewer_or_more_than_9_values_cannot_be_created
     assert_raises(RuntimeError) do
-      TicTacToe.new("")   
+      TicTacToe.new("", @player1, @player2)   
     end
   end
 
   def test_a_board_with_two_Xs_and_one_0_is_valid?
-    game = TicTacToe.new("X X   0  ")
+    game = TicTacToe.new("X X   0  ", @player1, @player2)
     assert game.valid?
   end
 
   def test_a_board_with_three_0_and_one_X_is_invalid?
-    game = TicTacToe.new(" 0 0 0X  ")
+    game = TicTacToe.new(" 0 0 0X  ", @player1, @player2)
     refute game.valid?
   end
 
   def test_the_board_with_nine_blank_spaces_is_valid
-    game = TicTacToe.new('         ')
+    game = TicTacToe.new('         ', @player1, @player2)
     assert game.valid?
   end
 
   def test_to_s
-    game = TicTacToe.new("X XOX0X0X")
-    string_representation = "\n X |   | X \n O | X | 0 \n X | 0 | X "
+    game = TicTacToe.new("X XOX0X0X", @player1, @player2)
+    string_representation = "X XOX0X0X"
     assert_equal string_representation, game.to_s
   end
 
+  def test_print
+    game = TicTacToe.new("X XOX0X0X", @player1, @player2)
+    print_output = "\n X |   | X \n O | X | 0 \n X | 0 | X "
+    assert_equal print_output, game.print
+  end
+
+  def test_the_game_is_line_aware
+    game = TicTacToe.new("X XOX0X0X", @player1, @player2)
+    assert_kind_of LineAware, game
+  end
+
   def test_the_game_with_a_horizontal_line_is_finished
-    game = TicTacToe.new("XXX 0 0  ")
+    game = TicTacToe.new("XXX 0 0  ", @player1, @player2)
     assert game.valid?
     assert_equal true, game.finished?
   end
 
   def test_the_game_with_a_vertical_line_is_finished
-    game = TicTacToe.new('X 0X00X  ')
+    game = TicTacToe.new('X 0X00X  ', @player1, @player2)
     assert game.valid?
     assert game.finished?
   end
 
   def test_the_game_with_a_diagonal_line_is_finished
-    game = TicTacToe.new("X  0X0  X")
+    game = TicTacToe.new("X  0X0  X", @player1, @player2)
     assert game.valid?
     assert game.finished?
   end
 
   def test_the_game_with_a_diagonal_line_is_finished
-    game = TicTacToe.new("XX0 0 0XX")
+    game = TicTacToe.new("XX0 0 0XX", @player1, @player2)
     assert game.valid?
     assert game.finished?
   end
 
   def test_the_game_without_a_winner_is_not_finished
-    game = TicTacToe.new("XX00XXX00")
+    game = TicTacToe.new("XX00XXX00", @player1, @player2)
     assert game.valid?
     assert !game.finished?
   end
 
-  def test_the_game_that_is_one_step_from_winning_can_calculate_the_best_move
-    game = TicTacToe.new("X 0X0    ")    
-    assert_equal 6, game.next_move              # 6 is the index in the grid, 0 to 8
+  def test_the_game_has_two_players
+    game = TicTacToe.new("X 0X0    ", @player1, @player2)
+    assert_kind_of Player, game.player1
+    assert_kind_of Player, game.player2
+  end
+
+  def test_players_have_marks_when_the_game_starts
+    game = TicTacToe.new("X 0X0    ", @player1, @player2)   
+    game.player1.mark == TicTacToe::CROSS
+    game.player2.mark == TicTacToe::NOUGHT
   end
 
   def test_the_game_knows_the_next_player
-    game = TicTacToe.new("X 0X0    ")
+    game = TicTacToe.new("X 0X0    ", @player1, @player2)
     assert_equal game.player1, game.next_player # X is the first because we assume X started the game    
   end
+
+  def test_the_game_that_is_one_step_from_winning_can_calculate_the_best_move
+    game = TicTacToe.new("X 0X0    ", @player1, @player2)
+    game.next_move! # 6 is the index in the grid, 0 to 8
+    assert_equal "X 0X0 6  ", game.to_s 
+  end
+
 end

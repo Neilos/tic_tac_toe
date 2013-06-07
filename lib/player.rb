@@ -1,8 +1,15 @@
+require_relative 'line_aware'
 
 class Player
-attr_reader :mark
-  def initialize(mark)
-    @mark = mark
+include LineAware
+
+attr_accessor :mark
+  def initialize
+    @mark = " "
+  end
+
+  def choose_move(board)
+    6
   end
 
 end
