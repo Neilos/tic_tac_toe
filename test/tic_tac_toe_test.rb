@@ -1,6 +1,7 @@
 require 'minitest'
 require 'minitest/autorun'
 require '../lib/tic_tac_toe'
+require '../lib/human_player'
 
 class TicTacToeTest < Minitest::Test
 
@@ -133,14 +134,20 @@ class TicTacToeTest < Minitest::Test
   
   def test_a_game_can_be_run
     game = TicTacToe.new("         ", @player1, @player2)
-    game.run!
+    game.play!
     assert game.game_over?
   end
 
   def test_a_game_knows_who_the_winner_is
     game = TicTacToe.new("X 0X0    ", @player1, @player2)
-    game.run!
+    game.play!
     assert @player1, game.winner
+  end
+
+  def test_human_players_can_player
+    human_player = HumanPlayer.new
+    game = TicTacToe.new("         ", human_player, @player2)
+    game.play!
   end
 
 end

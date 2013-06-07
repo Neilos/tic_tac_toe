@@ -1,6 +1,5 @@
 require_relative 'line_aware'
 require_relative 'tic_tac_toe'
-require_relative 'tic_tac_toe'
 
 class Player
 include LineAware

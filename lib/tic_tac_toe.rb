@@ -45,16 +45,17 @@ def to_s
 end
 
 
-def run!
+def play!
   until game_over?
     puts game_table
     puts
-    puts "Now it's player #{next_player}'s turn..."
     next_move!
+    puts "Player #{next_player}'s turn."
+    puts "----------------------------"
   end
   puts game_table
   puts
-  puts finished? ? "THE WINNER IS #{winner}" : "IT'S A DRAW"
+  puts finished? ? "THE WINNER IS PLAYER #{winner}" : "IT'S A DRAW"
 end
 
 def game_table
@@ -80,7 +81,7 @@ end
 private
 
 def get_move_from(player)
-  move = player.choose_move(board)
+  move = player.choose_move(board).to_i
   raise(RuntimeError, "Move must be in an empty space") unless @board[move] == " "
   move
 end
