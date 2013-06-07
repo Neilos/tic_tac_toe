@@ -33,4 +33,14 @@ def test_player_can_progress_their_position
   assert_equal 4, player.choose_move("X 0    0 ")
 end
 
+def test_player_to_s_returns_right_number
+  player1 = Player.new
+  player1.mark = "X"
+  assert_equal "1", player1.to_s
+
+  player2 = Player.new
+  player2.mark = "0"
+  assert_equal "2", player2.to_s
+end
+
 end

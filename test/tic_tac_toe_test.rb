@@ -137,4 +137,10 @@ class TicTacToeTest < Minitest::Test
     assert game.game_over?
   end
 
+  def test_a_game_knows_who_the_winner_is
+    game = TicTacToe.new("X 0X0    ", @player1, @player2)
+    game.run!
+    assert @player1, game.winner
+  end
+
 end

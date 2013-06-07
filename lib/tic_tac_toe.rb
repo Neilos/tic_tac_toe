@@ -48,10 +48,13 @@ end
 def run!
   until game_over?
     puts game_table
-    puts "Player#{next_player}'s turn..."
+    puts
+    puts "Now it's player #{next_player}'s turn..."
     next_move!
   end
   puts game_table
+  puts
+  puts finished? ? "THE WINNER IS #{winner}" : "IT'S A DRAW"
 end
 
 def game_table
@@ -66,6 +69,10 @@ end
 
 def game_over?
   finished? || board.count(SPACE) == 0
+end
+
+def winner
+  next_player == player1 ? player2 : player1
 end
 
 

@@ -15,7 +15,11 @@ attr_accessor :mark
     return blocking_move(board) if blocking_move(board)
     return progressive_move(board) if progressive_move(board)
     return free_move(board) if free_move(board)
-    0
+    raise RuntimeError, "Can't go."
+  end
+
+  def to_s
+    mark == TicTacToe::NOUGHT ? "2" : "1"
   end
 
 private
