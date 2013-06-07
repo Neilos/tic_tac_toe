@@ -144,10 +144,4 @@ class TicTacToeTest < Minitest::Test
     assert @player1, game.winner
   end
 
-  def test_human_players_can_player
-    human_player = HumanPlayer.new
-    game = TicTacToe.new("         ", human_player, @player2)
-    game.play!
-  end
-
 end

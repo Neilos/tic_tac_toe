@@ -10,11 +10,11 @@ attr_accessor :mark
   end
 
   def choose_move(board)
-    return winning_move(board) if winning_move(board)
-    return blocking_move(board) if blocking_move(board)
-    return progressive_move(board) if progressive_move(board)
-    return free_move(board) if free_move(board)
-    raise RuntimeError, "Can't go."
+    @board = board
+    return winning_move if winning_move
+    return blocking_move if blocking_move
+    return progressive_move if progressive_move
+    return free_move if free_move
   end
 
   def to_s
@@ -23,23 +23,23 @@ attr_accessor :mark
 
 private
 
-  def winning_move(board)
-    winning_move = empty_positions_in_lines_matching([mark,mark,TicTacToe::SPACE], board).first unless 
+  def winning_move
+    winning_move = empty_positions_in_lines_matching([mark,mark,TicTacToe::SPACE], @board).first unless 
     winning_move == [] ? nil : winning_move
   end
 
-  def blocking_move(board)
-    blocking_move = empty_positions_in_lines_matching([other_player_mark,other_player_mark,TicTacToe::SPACE], board).first 
+  def blocking_move
+    blocking_move = empty_positions_in_lines_matching([other_player_mark,other_player_mark,TicTacToe::SPACE], @board).first 
      blocking_move == [] ? nil : blocking_move
   end
 
-  def progressive_move(board)
-    progressive_move = empty_positions_in_lines_matching([mark,TicTacToe::SPACE,TicTacToe::SPACE], board).first 
+  def progressive_move
+    progressive_move = empty_positions_in_lines_matching([mark,TicTacToe::SPACE,TicTacToe::SPACE], @board).first 
      progressive_move == [] ? nil : progressive_move
   end
 
-  def free_move(board)
-    free_move = empty_positions_in_lines_matching([TicTacToe::SPACE,TicTacToe::SPACE,TicTacToe::SPACE], board).first 
+  def free_move
+    free_move = empty_positions_in_lines_matching([TicTacToe::SPACE,TicTacToe::SPACE,TicTacToe::SPACE], @board).first 
      free_move == [] ? nil : free_move
   end
 

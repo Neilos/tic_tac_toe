@@ -27,7 +27,7 @@ def test_player_can_block_winning_move_by_other_player
   assert_equal 6, player.choose_move("X 0X0    ")
 end
 
-def test_player_can_progress_their_position
+def test_player_can_advance_their_position
   player = Player.new
   player.mark = "X"
   assert_equal 4, player.choose_move("X 0    0 ")
