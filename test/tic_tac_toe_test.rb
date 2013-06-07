@@ -55,7 +55,7 @@ class TicTacToeTest < Minitest::Test
   def test_print
     game = TicTacToe.new("X XOX0X0X", @player1, @player2)
     print_output = "\n X |   | X \n O | X | 0 \n X | 0 | X "
-    assert_equal print_output, game.print
+    assert_equal print_output, game.game_table
   end
 
   def test_the_game_is_line_aware
@@ -115,6 +115,26 @@ class TicTacToeTest < Minitest::Test
     game.next_move! # 6 is the index in the grid, 0 to 8
     assert_equal "X 0X0 X  ", game.to_s 
   end
+
+  def test_game_over_when_finished_or_all_cells_populated
+    game = TicTacToe.new("XXX 0 0  ", @player1, @player2)
+    assert_equal true, game.finished?
+    assert_equal true, game.game_over?
+
+    game = TicTacToe.new("X0XXX00X0", @player1, @player2)
+    assert_equal true, game.game_over?
+  end
+
+  def test_game_NOT_over_until_finished_or_all_cells_populated
+    game = TicTacToe.new("X0XXX00X ", @player1, @player2)
+    refute game.finished?
+    refute game.game_over?
+  end
   
+  def test_a_game_can_be_run
+    game = TicTacToe.new("         ", @player1, @player2)
+    game.run!
+    assert game.game_over?
+  end
 
 end

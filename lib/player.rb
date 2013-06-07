@@ -15,7 +15,7 @@ attr_accessor :mark
     return blocking_move(board) if blocking_move(board)
     return progressive_move(board) if progressive_move(board)
     return free_move(board) if free_move(board)
-    raise RuntimeError, "Can't go."
+    0
   end
 
 private
@@ -36,7 +36,7 @@ private
   end
 
   def free_move(board)
-    free_move = empty_positions_in_lines_matching([mark,TicTacToe::SPACE,TicTacToe::SPACE], board).first 
+    free_move = empty_positions_in_lines_matching([TicTacToe::SPACE,TicTacToe::SPACE,TicTacToe::SPACE], board).first 
      free_move == [] ? nil : free_move
   end
 

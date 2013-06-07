@@ -44,7 +44,17 @@ def to_s
   board.join
 end
 
-def print
+
+def run!
+  until game_over?
+    puts game_table
+    puts "Player#{next_player}'s turn..."
+    next_move!
+  end
+  puts game_table
+end
+
+def game_table
   string = ""
   board.each_with_index do |c, i|
     string << "\n" if i % 3 ==0
@@ -54,14 +64,20 @@ def print
   string
 end
 
+def game_over?
+  finished? || board.count(SPACE) == 0
+end
+
 
 ##########
-# private
-##########
+private
+
+
+
 
 def get_move_from(player)
   move = player.choose_move(board)
-  raise(RuntimeError, "Move must be in an empty space") unless @board[move] == SPACE
+  raise(RuntimeError, "Move must be in an empty space") unless @board[move] == " "
   move
 end
 
