@@ -1,6 +1,7 @@
+require_relative 'player'
 
 class TicTacToe
-attr_reader :board
+attr_reader :board, :player1, :player2
 
 LINE_INDEXES = [
   # backslash
@@ -20,6 +21,8 @@ SPACE = " "
 def initialize(board_string)
   raise RuntimeError unless board_string.size == 9
   @board = board_string.split('')
+  @player1 = Player.new(CROSS)
+  @player2 = Player.new(NOUGHT)
 end
 
 
@@ -28,16 +31,15 @@ def finished?
 end
 
 def next_move
-  
 end
 
 def next_player
-  count(of:"X", within:board) > count(of:"0", within:board) ? NOUGHT : CROSS
+  count(of:"X", within: board) > count(of: "0", within: board) ? @player2 : @player1
 end
 
 def valid?
-  difference_between(:this => count(of:"X", within:board),
-                     :that => count(of:"0", within:board)) <= 1
+  difference_between(:this => count(of: "X", within: board),
+                     :that => count(of: "0", within: board)) <= 1
 end
 
 def to_s
@@ -55,16 +57,9 @@ end
 # private
 #########
 
-def diff_between(val1, val2)
-  (val1 - val2).abs
-end
 
 def difference_between(things)
   (things[:this] - things[:that]).abs
-end
-
-def count_of(mark)
-  board.count(mark)
 end
 
 def count(stuff)
