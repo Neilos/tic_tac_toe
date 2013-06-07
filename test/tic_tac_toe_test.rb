@@ -54,7 +54,7 @@ class TicTacToeTest < Minitest::Test
 
   def test_print
     game = TicTacToe.new("X XOX0X0X", @player1, @player2)
-    print_output = "\n X |   | X \n O | X | 0 \n X | 0 | X "
+    print_output = "\n X |   | X \n-----------\n O | X | 0 \n-----------\n X | 0 | X "
     assert_equal print_output, game.game_table
   end
 

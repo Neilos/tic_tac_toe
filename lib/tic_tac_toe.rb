@@ -58,9 +58,9 @@ def run!
 end
 
 def game_table
-  string = ""
+  string = "\n"
   board.each_with_index do |c, i|
-    string << "\n" if i % 3 ==0
+    string << "\n-----------\n" if i % 3 ==0 && i != 0
     string << "|" if (i % 3 == 1) || (i % 3 == 2)
     string << " " << c << " "
   end
@@ -78,9 +78,6 @@ end
 
 ##########
 private
-
-
-
 
 def get_move_from(player)
   move = player.choose_move(board)
