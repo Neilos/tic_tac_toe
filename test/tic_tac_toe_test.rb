@@ -113,7 +113,8 @@ class TicTacToeTest < Minitest::Test
   def test_the_game_that_is_one_step_from_winning_can_calculate_the_best_move
     game = TicTacToe.new("X 0X0    ", @player1, @player2)
     game.next_move! # 6 is the index in the grid, 0 to 8
-    assert_equal "X 0X0 6  ", game.to_s 
+    assert_equal "X 0X0 X  ", game.to_s 
   end
+  
 
 end

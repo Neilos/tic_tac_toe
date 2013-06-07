@@ -26,7 +26,7 @@ end
 def next_move!
   player = next_player
   move = get_move(player)
-  @board[move] == player.mark 
+  @board[move] = player.mark 
 end
 
 def next_player
@@ -34,7 +34,7 @@ def next_player
 end
 
 def valid?
-  difference_between(:this => count(of: "X", within: board),
+  difference_between(:this => count(of: "X", within: board), 
                      :that => count(of: "0", within: board)) <= 1
 end
 
@@ -59,7 +59,7 @@ end
 
 def get_move(player)
   move = player.choose_move(board)
-  raise RuntimeError if @board[move] != SPACE
+  raise(RuntimeError, "Move must be in an empty space") unless @board[move] == SPACE
   move
 end
 

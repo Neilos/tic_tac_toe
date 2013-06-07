@@ -17,8 +17,22 @@ def lines(board)
   LINE_INDEXES.map{ |line| line.map{ |index| board[index] } }
 end
 
-def lines_containing(search_values = [], board)
-  lines(board).select{|line_values| search_values - line_values == []}
+def line_values(line, board)
+  line.map{|position| board[position]}
+end
+
+def lines_matching(search_values=[], board)
+  LINE_INDEXES.select{ |line| search_values.permutation.to_a.include? line_values(line, board) }
+end
+
+def empty_positions_in_lines_matching(search_values=[], board)
+  result = []
+  lines_matching(search_values, board).each do |line|
+    line.each do |position|
+      result << position if board[position] == " "
+    end
+  end
+  result.uniq
 end
 
 end

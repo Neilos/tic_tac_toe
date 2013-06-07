@@ -10,8 +10,12 @@ attr_accessor :mark
   end
 
   def choose_move(board)
-    # && lines_containing(board, " ") && lines_containing(board, @mark)
-    6
+    return empty_positions_in_lines_matching([mark,mark," "], board).first unless empty_positions_in_lines_matching([mark,mark," "], board) == []
+  end
+
+private
+
+  def winning_move
   end
 
 end
