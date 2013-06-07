@@ -41,43 +41,49 @@ class TicTacToeTest < Minitest::Test
     assert game.valid?
   end
 
-  def test_the_game_with_a_horizontal_line_is_finished
-    game = TicTacToe.new("XXX 0 0  ")
-    assert game.valid?
-    assert game.finished?
+  def test_to_s
+    game = TicTacToe.new("X XOX0X0X")
+    string_representation = "\n X |   | X \n O | X | 0 \n X | 0 | X "
+    assert_equal string_representation, game.to_s
   end
 
-  def test_the_game_with_a_vertical_line_is_finished
-    game = TicTacToe.new('X 0X00X  ')
-    assert game.valid?
-    assert game.finished?
-  end
+  # def test_the_game_with_a_horizontal_line_is_finished
+  #   game = TicTacToe.new("XXX 0 0  ")
+  #   assert game.valid?
+  #   assert_equal true, game.finished?
+  # end
 
-  def test_the_game_with_a_diagonal_line_is_finished
-    game = TicTacToe.new("X  0X0  X")
-    assert game.valid?
-    assert game.finished?
-  end
+  # def test_the_game_with_a_vertical_line_is_finished
+  #   game = TicTacToe.new('X 0X00X  ')
+  #   assert game.valid?
+  #   assert game.finished?
+  # end
 
-  def test_the_game_with_a_diagonal_line_is_finished
-    game = TicTacToe.new("XX0 0 0XX")
-    assert game.valid?
-    assert game.finished?
-  end
+  # def test_the_game_with_a_diagonal_line_is_finished
+  #   game = TicTacToe.new("X  0X0  X")
+  #   assert game.valid?
+  #   assert game.finished?
+  # end
 
-  def test_the_game_without_a_winner_is_not_finished
-    game = TicTacToe.new("XX00XXX00")
-    assert game.valid?
-    assert !game.finished?
-  end
+  # def test_the_game_with_a_diagonal_line_is_finished
+  #   game = TicTacToe.new("XX0 0 0XX")
+  #   assert game.valid?
+  #   assert game.finished?
+  # end
 
-  def test_the_game_that_is_one_step_from_winning_can_calculate_the_best_move
-    game = TicTacToe.new("X 0X0    ")    
-    assert_equal 6, game.next_move              # 6 is the index in the grid, 0 to 8
-  end
+  # def test_the_game_without_a_winner_is_not_finished
+  #   game = TicTacToe.new("XX00XXX00")
+  #   assert game.valid?
+  #   assert !game.finished?
+  # end
 
-  def test_the_game_knows_the_next_player
-    game = TicTacToe.new("X 0X0    ")
-    assert_equal TicTacToe::X, game.next_player # X is the first because we assume X started the game    
-  end
+  # def test_the_game_that_is_one_step_from_winning_can_calculate_the_best_move
+  #   game = TicTacToe.new("X 0X0    ")    
+  #   assert_equal 6, game.next_move              # 6 is the index in the grid, 0 to 8
+  # end
+
+  # def test_the_game_knows_the_next_player
+  #   game = TicTacToe.new("X 0X0    ")
+  #   assert_equal TicTacToe::CROSSES, game.next_player # X is the first because we assume X started the game    
+  # end
 end
