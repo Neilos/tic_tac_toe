@@ -12,20 +12,22 @@ SPACE = " "
 def initialize(board_string, cross_player, nought_player)
   raise RuntimeError unless board_string.size == 9
   @board = board_string.split('')
+  
   @player1 = cross_player
   @player1.mark = CROSS
+
   @player2 = nought_player
   @player2.mark = NOUGHT
 end
 
 
 def finished?
-  lines(board).any?{|line| line.uniq.count==1 and line.first!=SPACE }
+  lines(board).any?{|line| line.uniq.count==1 and line.first!= SPACE }
 end
 
 def next_move!
   player = next_player
-  move = get_move(player)
+  move = get_move_from player
   @board[move] = player.mark 
 end
 
@@ -53,11 +55,11 @@ def print
 end
 
 
-#########
+##########
 # private
-#########
+##########
 
-def get_move(player)
+def get_move_from(player)
   move = player.choose_move(board)
   raise(RuntimeError, "Move must be in an empty space") unless @board[move] == SPACE
   move
