@@ -4,8 +4,10 @@ require './lib/tic_tac_toe'
 require './lib/human_player'
 require './lib/player'
 
-@human_player = HumanPlayer.new
-@computer_player = Player.new
-
-game = TicTacToe.new("         ", @human_player, @computer_player)
-game.play!
+players = [Player.new, HumanPlayer.new]
+begin
+  game = TicTacToe.new("         ", *players.rotate!)
+  game.play!
+  print "Play again? (Y)/n"
+  continue = gets.chomp
+end until continue=="n"
