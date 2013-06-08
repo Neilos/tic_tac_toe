@@ -26,13 +26,7 @@ def lines_matching(search_values=[], board)
 end
 
 def empty_positions_in_lines_matching(search_values=[], board)
-  result = []
-  lines_matching(search_values, board).each do |line|
-    line.each do |position|
-      result << position if board[position] == " "
-    end
-  end
-  result.uniq
+  result = lines_matching(search_values, board).flatten.uniq.select{|p| board[p]==" " }
 end
 
 end

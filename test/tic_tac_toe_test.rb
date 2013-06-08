@@ -55,7 +55,7 @@ class TicTacToeTest < Minitest::Test
 
   def test_print
     game = TicTacToe.new("X XOX0X0X", @player1, @player2)
-    print_output = "\n X |   | X \n-----------\n O | X | 0 \n-----------\n X | 0 | X "
+    print_output = "\n\n X |   | X \n-----------\n O | X | 0 \n-----------\n X | 0 | X \n"
     assert_equal print_output, game.game_table
   end
 
@@ -67,31 +67,31 @@ class TicTacToeTest < Minitest::Test
   def test_the_game_with_a_horizontal_line_is_finished
     game = TicTacToe.new("XXX 0 0  ", @player1, @player2)
     assert game.valid?
-    assert_equal true, game.finished?
+    assert_equal true, game.game_won?
   end
 
   def test_the_game_with_a_vertical_line_is_finished
     game = TicTacToe.new('X 0X00X  ', @player1, @player2)
     assert game.valid?
-    assert game.finished?
+    assert game.game_won?
   end
 
   def test_the_game_with_a_diagonal_line_is_finished
     game = TicTacToe.new("X  0X0  X", @player1, @player2)
     assert game.valid?
-    assert game.finished?
+    assert game.game_won?
   end
 
   def test_the_game_with_a_diagonal_line_is_finished
     game = TicTacToe.new("XX0 0 0XX", @player1, @player2)
     assert game.valid?
-    assert game.finished?
+    assert game.game_won?
   end
 
   def test_the_game_without_a_winner_is_not_finished
     game = TicTacToe.new("XX00XXX00", @player1, @player2)
     assert game.valid?
-    assert !game.finished?
+    assert !game.game_won?
   end
 
   def test_the_game_has_two_players
@@ -119,7 +119,7 @@ class TicTacToeTest < Minitest::Test
 
   def test_game_over_when_finished_or_all_cells_populated
     game = TicTacToe.new("XXX 0 0  ", @player1, @player2)
-    assert_equal true, game.finished?
+    assert_equal true, game.game_won?
     assert_equal true, game.game_over?
 
     game = TicTacToe.new("X0XXX00X0", @player1, @player2)
@@ -128,11 +128,11 @@ class TicTacToeTest < Minitest::Test
 
   def test_game_NOT_over_until_finished_or_all_cells_populated
     game = TicTacToe.new("X0XXX00X ", @player1, @player2)
-    refute game.finished?
+    refute game.game_won?
     refute game.game_over?
   end
   
-  def test_a_game_can_be_run
+  def test_a_game_can_be_played
     game = TicTacToe.new("         ", @player1, @player2)
     game.play!
     assert game.game_over?
@@ -143,5 +143,6 @@ class TicTacToeTest < Minitest::Test
     game.play!
     assert @player1, game.winner
   end
+
 
 end

@@ -8,7 +8,4 @@ require './lib/player'
 @computer_player = Player.new
 
 game = TicTacToe.new("         ", @human_player, @computer_player)
-puts
-puts "----------------------------"
-puts "You are player 1. You are 'crosses'."
 game.play!

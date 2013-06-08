@@ -2,49 +2,60 @@ require_relative 'line_aware'
 require_relative 'tic_tac_toe'
 
 class Player
-include LineAware
+  include LineAware
+  attr_accessor :mark
 
-attr_accessor :mark
   def initialize
-    @mark = " "
+    @mark = TicTacToe::CROSS
   end
 
   def choose_move(board)
-    @board = board
-    return winning_move if winning_move
-    return blocking_move if blocking_move
-    return progressive_move if progressive_move
-    return free_move if free_move
+    return winning_move_on board if winning_move_on board
+    return blocking_move_on board if blocking_move_on board
+    return open_move_on board if open_move_on board
+    return progressive_move_on board if progressive_move_on board
+    return game_finalizing_move_on board if game_finalizing_move_on board
   end
 
   def to_s
-    mark == TicTacToe::NOUGHT ? "2" : "1"
+    mark==TicTacToe::CROSS ? "1" : "2"
   end
+
 
 private
 
-  def winning_move
-    winning_move = empty_positions_in_lines_matching([mark,mark,TicTacToe::SPACE], @board).first unless 
-    winning_move == [] ? nil : winning_move
+  def winning_move_on(board)
+    moves = empty_positions_in_lines_matching [mark, mark, TicTacToe::SPACE], board 
+    moves.sample unless moves.count==0
   end
 
-  def blocking_move
-    blocking_move = empty_positions_in_lines_matching([other_player_mark,other_player_mark,TicTacToe::SPACE], @board).first 
-     blocking_move == [] ? nil : blocking_move
+  def blocking_move_on(board)
+    moves = empty_positions_in_lines_matching [other_players_mark, other_players_mark, TicTacToe::SPACE], board 
+    moves.sample  unless moves.count==0
   end
 
-  def progressive_move
-    progressive_move = empty_positions_in_lines_matching([mark,TicTacToe::SPACE,TicTacToe::SPACE], @board).first 
-     progressive_move == [] ? nil : progressive_move
+  def pre_emptive_blocking_move_on(board)
+    moves = empty_positions_in_lines_matching [TicTacToe::SPACE, other_players_mark, TicTacToe::SPACE], board 
+    moves.sample  unless moves.count==0
   end
 
-  def free_move
-    free_move = empty_positions_in_lines_matching([TicTacToe::SPACE,TicTacToe::SPACE,TicTacToe::SPACE], @board).first 
-     free_move == [] ? nil : free_move
+  def open_move_on(board)
+    moves = empty_positions_in_lines_matching [TicTacToe::SPACE, TicTacToe::SPACE, TicTacToe::SPACE], board
+    moves.sample unless moves.count==0
   end
 
-  def other_player_mark
-    mark == TicTacToe::NOUGHT ? TicTacToe::CROSS : TicTacToe::NOUGHT
+  def progressive_move_on(board)
+    moves = empty_positions_in_lines_matching [mark, TicTacToe::SPACE, TicTacToe::SPACE], board
+    moves.sample unless moves.count==0
+  end
+
+  def game_finalizing_move_on(board)
+    moves = empty_positions_in_lines_matching [mark, other_players_mark, TicTacToe::SPACE], board
+    moves.sample unless moves.count==0
+  end
+
+  def other_players_mark
+    mark==TicTacToe::NOUGHT ? TicTacToe::CROSS : TicTacToe::NOUGHT
   end
 
 end

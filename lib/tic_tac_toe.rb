@@ -2,12 +2,14 @@ require_relative 'player'
 require_relative 'line_aware'
 
 class TicTacToe
-include LineAware
-attr_reader :board, :player1, :player2
-
-CROSS = "X"
-NOUGHT = "0"
-SPACE = " "
+  include LineAware
+  attr_reader :board, :player1, :player2
+  CROSS = "X"
+  NOUGHT = "0"
+  SPACE = " "
+  LINE = "\n----------------------------\n"
+  BOARD_HORIZONTAL = "\n-----------\n"
+  BOARD_VERTICAL = "|"
 
   def initialize(board_string, cross_player, nought_player)
     raise RuntimeError unless board_string.size == 9
@@ -20,79 +22,69 @@ SPACE = " "
     @player2.mark = NOUGHT
   end
 
+  def valid?
+    1 >= difference_between(:this => (count of: CROSS, within: board), 
+                            :that => (count of: NOUGHT, within: board))
+  end
 
-  def finished?
+  def game_won?
     lines(board).any?{|line| line.uniq.count==1 and line.first!= SPACE }
   end
 
-  def next_move!
-    move = get_move_from next_player
-    @board[move] = next_player.mark 
+  def game_over?
+    game_won? || board.count(SPACE) == 0
+  end
+
+  def winner
+    next_player==player1 ? player2 : player1
   end
 
   def next_player
-    count(of:"X", within: board) > count(of: "0", within: board) ? @player2 : @player1
+    (count of: CROSS, within: board) > (count of: NOUGHT, within: board) ? player2 : player1
   end
 
-  def valid?
-    difference_between(:this => count(of: "X", within: board), 
-                       :that => count(of: "0", within: board)) <= 1
+  def next_move!
+    board[get_move_from next_player] = next_player.mark 
   end
 
   def to_s
     board.join
   end
 
-  def game_over?
-    finished? || board.count(SPACE) == 0
-  end
-
-  def winner
-    next_player == player1 ? player2 : player1
+  def game_table
+    string = "\n\n" + (0..8).map { |i| "#{ BOARD_HORIZONTAL if i % 3 ==0 && i != 0 }" + "#{ BOARD_VERTICAL if (i % 3 == 1) || (i % 3 == 2) }" + "#{ SPACE + board[i] + SPACE }" }.join + "\n"
   end
 
   def play!
     until game_over?
-      print game_table + "\n\n"
+      print game_table + LINE + "Player #{next_player}'s turn. "
       next_move!
-      print "Player #{next_player}'s turn.\n----------------------------\n"
     end
-    puts finished? ? game_table + "\nPLAYER #{winner} IS THE WINNER\n----------------------------\n" : game_table + "\nIT'S A DRAW\n----------------------------\n"
-  end
-
-  def game_table
-    string = "\n"
-    board.each_with_index do |c, i|
-      string << "\n-----------\n" if i % 3 ==0 && i != 0
-      string << "|" if (i % 3 == 1) || (i % 3 == 2)
-      string << " " << c << " "
-    end
-    string
+    print game_table + (game_won? ? "\n\nPLAYER #{winner} IS THE WINNER!" + LINE : "\n\nIT'S A DRAW" + LINE)
+    board
   end
 
 
-##########
 private
 
   def get_move_from(player)
-    move = player.choose_move(board).to_i
-    until valid_move?(move)
-      print "Invalid move! Choose an empty postion (0,1,2,3,4,5,6,7,8): "
-      move = player.choose_move(board).to_i
-    end
-    move
+    begin
+      move = player.choose_move(board)
+      return move if legal? move
+      print "#{move} is invalid! Choose an empty postion (0,1,2,3,4,5,6,7,8): "
+    end until legal?(move)
   end
 
-  def valid_move?(move)
-    board[move] == " " && [0,1,2,3,4,5,6,7,8].include?(move)
+  def legal?(move)
+    board[move] == SPACE && [0,1,2,3,4,5,6,7,8].include?(move)
   end
 
-  def difference_between(things)
-    (things[:this] - things[:that]).abs
+  def difference_between(number_of)
+    (number_of[:this] - number_of[:that]).abs
   end
 
-  def count(stuff)
-    stuff[:within].count(stuff[:of])
+  def count(things)
+    things[:within].count(things[:of])
   end
 
 end
