@@ -1,3 +1,5 @@
+
+require 'minitest'
 require 'minitest/autorun'
 require '../lib/tic_tac_toe'
 

@@ -1,6 +1,6 @@
 This repository contains my response (written in Ruby 1.9) to a one day coding challenge set in 2013 by Evgeny Shadchnev at Makers Academy in London.
 
-To execute my code and play tic tact toe run the ruby executable 'play_tic_tac_toe.rb' is this directory.
+To execute my code and play tic tact toe run the ruby executable 'play_tic_tac_toe.rb' is the lib directory.
 
 
 The Tic Tac Toe Coding Challenge
