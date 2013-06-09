@@ -5,7 +5,8 @@ class Player
   include LineAware
   attr_accessor :mark
 
-  def initialize
+  def initialize(name)
+    @name = name
     @mark = TicTacToe::CROSS
   end
 
@@ -18,7 +19,7 @@ class Player
   end
 
   def to_s
-    mark==TicTacToe::CROSS ? "1" : "2"
+    @name
   end
 
 

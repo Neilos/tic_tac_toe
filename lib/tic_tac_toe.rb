@@ -58,10 +58,10 @@ class TicTacToe
   def play!
     print "NEW GAME!"
     until game_over?
-      print game_table + LINE + "Player #{next_player}'s turn. "
+      print game_table + LINE + "#{next_player}'s turn. "
       next_move!
     end
-    print game_table + (game_won? ? "\n\nGAMES OVER.\nTHE WINNER IS PLAYER #{winner}!" + LINE : "\n\nGAMES OVER.\nIT'S A DRAW!" + LINE)
+    print game_table + (game_won? ? "\n\nGAMES OVER.\nTHE WINNER IS #{winner}!" + LINE : "\n\nGAMES OVER.\nIT'S A DRAW!" + LINE)
     board
   end
 
