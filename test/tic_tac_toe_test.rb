@@ -22,8 +22,8 @@ class TicTacToeTest < Minitest::Test
   # and two noughts, you know the next move is a cross.
 
   def setup
-    @player1 = Player.new
-    @player2 = Player.new
+    @player1 = Player.new("player1")
+    @player2 = Player.new("player2")
   end
 
   def test_a_board_with_fewer_or_more_than_9_values_cannot_be_created
