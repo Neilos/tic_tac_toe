@@ -65,4 +65,11 @@ def test_second_player_first_move_is_in_centre_if_available
   assert_equal 4 ,move, "#{move} is not where it should be"
 end
 
+def test_force_win_if_available
+  player = Player.new("player2")
+  player.mark = TicTacToe::CROSS
+  move = player.choose_move("X0  X   0")
+  assert [3,6].include?(move), "#{move} is not where it should be"
+end
+
 end

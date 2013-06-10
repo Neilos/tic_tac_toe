@@ -26,7 +26,7 @@ def lines_matching(search_values=[], board)
 end
 
 def empty_positions_in_lines_matching(search_values=[], board)
-  result = lines_matching(search_values, board).flatten.uniq.select{|p| board[p]==" " }
+  result = lines_matching(search_values, board).flatten.select{|p| board[p]==" " }
 end
 
 def corners

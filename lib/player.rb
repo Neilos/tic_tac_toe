@@ -14,9 +14,10 @@ class Player
     return opening_play_on board if opening_play_on board
     return winning_move_on board if winning_move_on board
     return blocking_move_on board if blocking_move_on board
+    return force_win_on board if force_win_on board
     return open_move_on board if open_move_on board
     return progressive_move_on board if progressive_move_on board
-    return game_finalizing_move_on board if game_finalizing_move_on board
+    return last_resort_move_on board if last_resort_move_on board
   end
 
   def to_s
@@ -41,9 +42,16 @@ private
     moves.sample  unless moves.count==0
   end
 
-  def pre_emptive_blocking_move_on(board)
-    moves = empty_positions_in_lines_matching [TicTacToe::SPACE, other_players_mark, TicTacToe::SPACE], board 
-    moves.sample  unless moves.count==0
+  # def pre_emptive_blocking_move_on(board)
+  #   moves = empty_positions_in_lines_matching [TicTacToe::SPACE, other_players_mark, TicTacToe::SPACE], board 
+  #   moves.sample  unless moves.count==0
+  # end
+
+  def force_win_on(board)
+    moves = empty_positions_in_lines_matching [mark, TicTacToe::SPACE, TicTacToe::SPACE], board
+    #get duplicates
+    moves.select!{|i| moves.count(i) > 1}
+    moves.sample unless moves.count==0
   end
 
   def open_move_on(board)
@@ -56,7 +64,7 @@ private
     moves.sample unless moves.count==0
   end
 
-  def game_finalizing_move_on(board)
+  def last_resort_move_on(board)
     moves = empty_positions_in_lines_matching [mark, other_players_mark, TicTacToe::SPACE], board
     moves.sample unless moves.count==0
   end
