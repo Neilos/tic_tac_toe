@@ -87,5 +87,4 @@ private
   def count(things)
     things[:within].count(things[:of])
   end
-
 end

@@ -11,6 +11,7 @@ class Player
   end
 
   def choose_move(board)
+    return opening_play_on board if opening_play_on board
     return winning_move_on board if winning_move_on board
     return blocking_move_on board if blocking_move_on board
     return open_move_on board if open_move_on board
@@ -24,6 +25,11 @@ class Player
 
 
 private
+  
+  def opening_play_on(board)
+    return corners.sample if board.count(TicTacToe::SPACE)==9
+    return centre.first if board.count(TicTacToe::SPACE)==8 && board[centre.first]==TicTacToe::SPACE
+  end
 
   def winning_move_on(board)
     moves = empty_positions_in_lines_matching [mark, mark, TicTacToe::SPACE], board 

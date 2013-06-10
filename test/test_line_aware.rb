@@ -111,7 +111,15 @@ def test_empty_positions_in_lineS_matching_particular_combinations_of_values
   assert_equal expected, result, "problem with '0 XX000XX'"
 end
 
+def test_knows_about_corners
+  line_aware_instance = LineAwareClass.new
+  assert_equal line_aware_instance.corners, [0,2,6,8]
+end
 
+def test_knows_about_centre
+  line_aware_instance = LineAwareClass.new
+  assert_equal line_aware_instance.centre, [4]
+end
 
 
 end

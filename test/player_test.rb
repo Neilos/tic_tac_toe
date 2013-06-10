@@ -51,4 +51,18 @@ def test_player_to_s_returns_right_number
   assert_equal "player2", player2.to_s
 end
 
+def test_opening_play_is_in_a_corner_or_center
+  player = Player.new("player")
+  player.mark = TicTacToe::CROSS
+  move = player.choose_move("         ")
+  assert [0,2,4,6,8].include?(move), "#{move} is not where it should be"
+end
+
+def test_second_player_first_move_is_in_centre_if_available
+  player = Player.new("player2")
+  player.mark = TicTacToe::NOUGHT
+  move = player.choose_move("X        ")
+  assert_equal 4 ,move, "#{move} is not where it should be"
+end
+
 end
