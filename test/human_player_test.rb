@@ -6,7 +6,7 @@ require '../lib/human_player'
 class HumanPlayerTest < MiniTest::Test
 
 def test_human_player_is_a_player
-  player = HumanPlayer.new
+  player = HumanPlayer.new("human")
   assert_kind_of Player, player
 end
 

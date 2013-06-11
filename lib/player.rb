@@ -11,13 +11,7 @@ class Player
   end
 
   def choose_move(board)
-    return opening_play_on board if opening_play_on board
-    return winning_move_on board if winning_move_on board
-    return blocking_move_on board if blocking_move_on board
-    return force_win_on board if force_win_on board
-    return open_move_on board if open_move_on board
-    return progressive_move_on board if progressive_move_on board
-    return last_resort_move_on board if last_resort_move_on board
+    opening_play_on(board) || winning_move_on(board) || blocking_move_on(board) || force_win_on(board) || open_move_on(board) || progressive_move_on(board) || last_resort_move_on(board)
   end
 
   def to_s
